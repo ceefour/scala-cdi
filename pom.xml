@@ -9,6 +9,7 @@
 	<packaging>war</packaging>
 
 	<properties>
+	    <infinispan.version>5.1.0.CR4</infinispan.version>
 		<seam.version>3.1.0.Final</seam.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<scala.version>2.9.1</scala.version>
@@ -34,6 +35,12 @@
 	</dependencyManagement>
 	
 	<dependencies>
+		<dependency>
+		    <groupId>org.infinispan</groupId>
+		    <artifactId>infinispan-cdi</artifactId>
+		    <version>${infinispan.version}</version>
+		</dependency>
+	
         <dependency>
             <groupId>org.jboss.seam.international</groupId>
             <artifactId>seam-international</artifactId>
@@ -81,11 +88,11 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.scala-lang</groupId>
-			<artifactId>scala-library</artifactId>
-			<version>${scala.version}</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.scala-lang</groupId> -->
+<!-- 			<artifactId>scala-library</artifactId> -->
+<!-- 			<version>${scala.version}</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>

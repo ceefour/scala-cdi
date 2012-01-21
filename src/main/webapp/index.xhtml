@@ -10,6 +10,12 @@
 <h:body>
 	<p>@RequestScoped City: #{indexBean.city}</p>
 	<p>@SessionScoped Name: #{userBean.name}</p>
+	<p>@ApplicationScoped Name: #{appBean.car}</p>
+	<ol>
+	<ui:repeat var="animal" value="#{appBean.animals}">
+		<li>#{animal}</li>
+	</ui:repeat>
+	</ol>
 </h:body>
 
 </html>
