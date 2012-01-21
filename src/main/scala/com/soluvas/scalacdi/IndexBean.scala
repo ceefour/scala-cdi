@@ -5,14 +5,17 @@ import org.slf4j.LoggerFactory
 import javax.annotation.PostConstruct
 import scala.reflect.BeanProperty
 
+/**
+ * Testing @RequestScoped bean.
+ */
 @RequestScoped @Named
 class IndexBean {
   
   private val log = LoggerFactory.getLogger(classOf[IndexBean])
-  @BeanProperty var name = "Josh Smith"
+  @BeanProperty var city = "New York"
   
   @PostConstruct def init(): Unit = {
-    log.info("IndexBean started")
+    log.info("IndexBean started at {}", getClass())
   }
 
 }
