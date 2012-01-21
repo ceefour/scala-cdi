@@ -7,18 +7,18 @@ import scala.reflect.BeanProperty
 import javax.cache.annotation.CacheResult
 
 /**
- * Testing @RequestScoped bean.
+ * Testing @Dependent bean.
  */
-@RequestScoped @Named
-class IndexBean {
+@Named
+class NormalBean {
   
-  private val log = LoggerFactory.getLogger(classOf[IndexBean])
-  @BeanProperty var city = "New York"
+  private val log = LoggerFactory.getLogger(classOf[NormalBean])
+  @BeanProperty var plant = "Fungi"
   
   @PostConstruct def init(): Unit = {
-    log.info("IndexBean started at {}", getClass())
+    log.info("NormalBean started {}", getClass())
   }
   
-  @CacheResult def getAddress() = "5015 Elm Street"
+  @CacheResult def getLeaf() = "Greenlight"
 
 }

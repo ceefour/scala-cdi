@@ -8,7 +8,10 @@
 	<title>Scala-CDI Index</title>
 </h:head>
 <h:body>
+	<p>@Dependent Plant: #{normalBean.plant}</p>
+	<p>@Dependent @CacheResult Address: #{normalBean.leaf}</p>
 	<p>@RequestScoped City: #{indexBean.city}</p>
+	<p>@RequestScoped @CacheResult Address: #{indexBean.address}</p>
 	<p>@SessionScoped Name: #{userBean.name}</p>
 	<p>@ApplicationScoped Name: #{appBean.car}</p>
 	<ol>
