@@ -1,0 +1,57 @@
+h1. Scala "Bug" with CDI
+
+h2. Overview
+
+"Sometimes", Scala creates @public final@ methods, although the @.scala@ source defines
+no @public final@ method at all.
+
+There are two things that CDI doesn't like (which Scala "sometimes" generates):
+
+1. @public final@ methods
+2. @public@ fields
+
+h2. public final method: The Bug
+
+Referencing a parent field from a closure / inner class triggers this behavior:
+
+bc.. @RequestScoped @Named
+class IndexBean {
+  
+  private lazy val log = LoggerFactory.getLogger(classOf[IndexBean])
+  def testExecutor() = {
+    val executor = Executors.newFixedThreadPool(4);
+    executor.submit(new Runnable() { override def run(): Unit = log.debug("Executor is running") })
+  }
+
+}
+
+p. Compiles to:
+
+bc. $ javap -p IndexBean
+Compiled from "IndexBean.scala"
+public class com.soluvas.scalacdi.IndexBean extends java.lang.Object implements scala.ScalaObject{
+    private org.slf4j.Logger com$soluvas$scalacdi$IndexBean$$log;
+    ...
+    public final org.slf4j.Logger com$soluvas$scalacdi$IndexBean$$log();
+
+h2. public final method: Workaround
+
+Create a local final field to hold the parent instance's value:
+
+bc.  def testExecutor() = {
+    val executor = Executors.newFixedThreadPool(4);
+    // this avoids 'log' becoming 'final' like:
+    //     private org.slf4j.Logger com$soluvas$scalacdi$IndexBean$$log;
+    //     public final org.slf4j.Logger com$soluvas$scalacdi$IndexBean$$log();
+    val log = this.log; 
+    executor.submit(new Runnable() { override def run(): Unit = log.debug("Executor is running") })
+  }
+
+Which now compiles to:
+
+bc. $ javap -p IndexBean
+Compiled from "IndexBean.scala"
+public class com.soluvas.scalacdi.IndexBean extends java.lang.Object implements scala.ScalaObject{
+    private org.slf4j.Logger log;
+    private org.slf4j.Logger log();
+
