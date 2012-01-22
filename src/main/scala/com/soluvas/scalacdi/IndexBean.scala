@@ -37,7 +37,7 @@ class IndexBean {
     // this avoids 'log' becoming 'final' like:
     //     private org.slf4j.Logger com$soluvas$scalacdi$IndexBean$$log;
     //     public final org.slf4j.Logger com$soluvas$scalacdi$IndexBean$$log();
-    val log = this.log; 
+//    val log = this.log; 
     executor.submit(new Runnable() { override def run(): Unit = log.debug("Executor is running") })
   }
 
