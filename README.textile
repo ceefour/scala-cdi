@@ -34,6 +34,16 @@ public class com.soluvas.scalacdi.IndexBean extends java.lang.Object implements 
     ...
     public final org.slf4j.Logger com$soluvas$scalacdi$IndexBean$$log();
 
+Deploying this app in Weld will throw:
+
+bc. org.jboss.weld.exceptions.UnproxyableResolutionException: WELD-001437 Normal scoped bean class com.soluvas.scalacdi.IndexBean is not proxyable because the type is final or it contains a final method public final org.slf4j.Logger com.soluvas.scalacdi.IndexBean.com$soluvas$scalacdi$IndexBean$$log() - Managed Bean [class com.soluvas.scalacdi.IndexBean] with qualifiers [@Any @Default @Named].
+	at org.jboss.weld.util.Proxies.getUnproxyableClassException(Proxies.java:225)
+	at org.jboss.weld.util.Proxies.getUnproxyableTypeException(Proxies.java:178)
+	at org.jboss.weld.util.Proxies.getUnproxyableTypesExceptionInt(Proxies.java:193)
+	at org.jboss.weld.util.Proxies.getUnproxyableTypesException(Proxies.java:167)
+	at org.jboss.weld.bootstrap.Validator.validateBean(Validator.java:110)
+
+
 h2. public final method: Workaround
 
 Create a local final field to hold the parent instance's value:
@@ -55,3 +65,6 @@ public class com.soluvas.scalacdi.IndexBean extends java.lang.Object implements 
     private org.slf4j.Logger log;
     private org.slf4j.Logger log();
 
+h2. public field
+
+I'm not able to reproduce this yet...
